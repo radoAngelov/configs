@@ -1,0 +1,15 @@
+[color "branch"]
+  current = green
+  local = yellow
+  remote = red
+[color "status"]
+  added = green
+  changed = yellow
+  untracked = red
+[color]
+	ui = true
+[user]
+	name = angelov
+	email = angelov@fidor.com
+[branch]
+	autosetuprebase = always
