@@ -1,0 +1,55 @@
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+ehthumbs.db
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# Compiled source 
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.phar
+*.pyc
+*.so
+
+# Packages and archives
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases
+*.log
+# *.sql
+*.sqlite
+
+# Fonts
+*.ttf
+*.otf
+*.woff
+
+# Documents
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+*.xlc
+*.xlsx
+*.csv
+
+*.sublime-workspace
+
+*.tmp

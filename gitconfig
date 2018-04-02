@@ -1,15 +1,57 @@
+[alias]
+	s = status
+	cb = checkout -b
+	co = checkout
+	camend = commit --amend
+	logp = git log --oneline --decorate -24
+	oh = log --graph --abbrev-commit --decorate --date=relative --all
+	cm = commit -m
+	r = remote
+	rv = remote -v
+	ra = remote add
+	b = branch
+	rebr = branch -m
+	ps = push
+	a = add
+	reb = rebase
+	rebc = rebase --continue
+	f = fetch
+	m = merge
+	squash = rebase -i
+	prev = checkout @{-1}
+	dif = diff
+	st = stash
+	stp = stash pop
+
 [color "branch"]
-  current = green
-  local = yellow
-  remote = red
+ 	current = green
+ 	local = yellow
+  	remote = red
+
 [color "status"]
-  added = green
-  changed = yellow
-  untracked = red
+	added = green
+ 	changed = yellow
+ 	untracked = red
+
 [color]
-	ui = true
+	ui = auto
+
 [user]
 	name = angelov
 	email = angelov@fidor.com
+
 [branch]
 	autosetuprebase = always
+
+[core]
+	excludesfile = /Users/radoangelov/.gitignore
+	
+	# default editor for commit messages
+	editor = vim
+
+	# Make `git rebase` safer on OS X
+    	# More info: http://www.git-tower.com/blog/make-git-rebase-safe-on-osx
+    	trustctime = false
+
+	# errors for whitespaces
+	whitespace = space-before-tab,trailing-space,tab-in-indent
