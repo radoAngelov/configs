@@ -54,8 +54,21 @@ alias  prev='git checkout @{-1}'
 alias  dif='git diff'
 alias  gst='git stash'
 alias  gstp='git stash pop'
-alias  gcur='git push origin | git rev-parse --abbrev-ref HEAD'
-alias  gcurf='git push -f origin | git rev-parse --abbrev-ref HEAD'
+
+# git functions
+# push to current branch
+function gcur() {
+        br=$(git rev-parse --abbrev-ref HEAD)
+        echo -e "Pushing to branch: ${br}\n"
+        git push origin $br
+}
+
+# force push to current branch
+function gcurf() {
+        br=$(git rev-parse --abbrev-ref HEAD)
+        echo -e "Force pushing to branch: ${br}\n"
+        git push origin -f $br
+}
 
 # ssh to servers aliases
 alias  stage1='ssh deploy@s-ffr-swr-docker01.fidor.intern'
