@@ -6,10 +6,15 @@ case "$dir" in
 
 	"onboarding") echo "$dir is starting"
 	echo "******************************"
-	bundle exec rails server --port=6000
+	bundle exec rails server --port=6000 -b 0.0.0.0
 	;;
 
-	"api_gateway") echo "$dir is starting"
+	"onboarding_data_service") echo $dir is starting""
+	echo "******************************"
+	bundle exec rails server --port=6002 -b 0.0.0.0
+	;;
+
+	"api_gateway-1") echo "$dir is starting"
 	echo "******************************"
 	bundle exec puma -C config/puma.rb
 	;;
@@ -31,7 +36,7 @@ case "$dir" in
 
 	"gateway") echo "$dir is starting"
 	echo "******************************"
-	bundle exec rails server --port=3003
+	bundle exec rails server --port=3003 -b 0.0.0.0
 	;;
 
 	#starts banking
