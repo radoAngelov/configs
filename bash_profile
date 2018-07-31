@@ -6,7 +6,10 @@ if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completio
     complete -o default -o nospace -F _git g;
 fi;
 
-PS1='\n$PWD$(__git_ps1 " \033[0;33m%s\033[0m")$ '
+# random emoji to terminal
+ME_EMOJI=(🍺 🥃 🏋️ 🏀 🎉 ☠️ 🤡 🤘 🖕 👊 🐰 🐼 🦁 🐮 🐷);
+RANDOM_ME_EMOJI=${ME_EMOJI[$((RANDOM%15))]};
+PS1='$RANDOM_ME_EMOJI  $PWD$(__git_ps1 " \033[0;33m%s\033[0m")$ '
 
 # Enable jump
 eval "$(jump shell)"
