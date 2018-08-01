@@ -27,14 +27,6 @@ alias  job1='bundle exec rake jobs:workoff'
 alias  rs='bundle exec rspec'
 alias  db_restart='bundle exec rake db:drop db:create db:migrate db:seed'
 
-# fidor aliases
-alias  staba='EVENT_NOTIFIER_REGISTRY=generic PROJECT=generic LOCALE=en bundle exec rails server -b 0.0.0.0 --port=3000'
-alias  stadap='bundle exec rails s -p 7000'
-alias  stonb='bundle exec rails s -p 6000'
-alias  stapi='bundle exec puma -C config/puma.rb'
-alias  stauth='bundle exec rails s'
-alias  stoff='bundle exec rails s -p 3004'
-
 # git aliases
 alias  gs='git status'
 alias  gcb='git checkout -b'
@@ -75,7 +67,7 @@ function gcurf() {
         git push origin -f $br
 }
 
-# ssh to servers aliases
+# ssh to known hosts servers aliases
 alias  stage1='ssh deploy@s-ffr-swr-docker01.fidor.intern'
 alias  stage2='ssh deploy@s-ffr-swr-docker02.fidor.intern'
 alias  stage3='ssh deploy@s-ffr-swr-docker03.fidor.intern'
