@@ -1,0 +1,13 @@
+# /ssh/config
+# multiple github accounts under one user
+# Fidor config
+Host github.fidor.de
+  User git
+  HostName github.fidor.de
+  IdentityFile ~/.ssh/id_rsa
+
+# Local config
+Host github.com
+  User git
+  HostName github.com
+  IdentityFile ~/.ssh/id_rsa_local
