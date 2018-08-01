@@ -7,11 +7,10 @@ if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completio
 fi;
 
 # random emoji to terminal
-ME_EMOJI=(🍺 🥃 🏋️ 🏀 🎉 ☠️ 🤡 🤘 🖕 👊 🐰 🐼 🦁 🐮 🐷);
-RANDOM_ME_EMOJI=${ME_EMOJI[$((RANDOM%15))]};
+EMOJIES=(🍺 🥃 🏋️ 🏀 🎉 ☠️ 🤡 🤘 🖕 👊 🐰 🐼 🦁 🐮 🐷);
 # replace username with tilde
-ME='/Users/radoangelov'
-PS1='$RANDOM_ME_EMOJI  $(echo "${PWD/$ME/~}")$(__git_ps1 " \033[0;33m%s\033[0m")$ '
+ME='/Users/radoangelov';
+PS1='${EMOJIES[$((RANDOM%15))]}  $(echo "${PWD/$ME/~}")$(__git_ps1 " \033[0;33m%s\033[0m")$ '
 
 # Enable jump
 eval "$(jump shell)"
