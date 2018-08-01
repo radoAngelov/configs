@@ -9,7 +9,9 @@ fi;
 # random emoji to terminal
 ME_EMOJI=(🍺 🥃 🏋️ 🏀 🎉 ☠️ 🤡 🤘 🖕 👊 🐰 🐼 🦁 🐮 🐷);
 RANDOM_ME_EMOJI=${ME_EMOJI[$((RANDOM%15))]};
-PS1='$RANDOM_ME_EMOJI  $PWD$(__git_ps1 " \033[0;33m%s\033[0m")$ '
+# replace username with tilde
+ME='/Users/radoangelov'
+PS1='$RANDOM_ME_EMOJI  $(echo "${PWD/$ME/~}")$(__git_ps1 " \033[0;33m%s\033[0m")$ '
 
 # Enable jump
 eval "$(jump shell)"
