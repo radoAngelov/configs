@@ -66,34 +66,12 @@ function gcurf() {
         git push origin -f $br
 }
 
-# ssh to known hosts servers aliases
-alias  stage1='ssh deploy@s-ffr-swr-docker01.fidor.intern'
-alias  stage2='ssh deploy@s-ffr-swr-docker02.fidor.intern'
-alias  stage3='ssh deploy@s-ffr-swr-docker03.fidor.intern'
-alias  stage4='ssh deploy@s-ffr-swr-docker04.fidor.intern'
-alias  stageman='ssh deploy@10.1.20.10'
-alias  prod1='ssh deploy@p-ffr-swr-docker01.fidor.intern'
-alias  prod2='ssh deploy@p-ffr-swr-docker02.fidor.intern'
-alias  prod3='ssh deploy@p-ffr-swr-docker03.fidor.intern'
-alias  prod4='ssh deploy@p-ffr-swr-docker04.fidor.intern'
-alias  dockerscr='ssh deploy@10.1.14.1'
-alias  sbx2='ssh deploy@d-ffr-sbx-docker02.fidor.intern'
-alias  sbx1='ssh deploy@d-ffr-sbx-docker01.fidor.intern'
-alias  shadow='ssh deploy@p-ffr-shw-app01.fidor.intern'
-alias  sshtest='ssh deploy@t-ffr-sbx-rails01.fidor.intern'
-alias  prodman='ssh deploy@p-ffr-swr-manager01.fidor.intern'
-
 # Add bin to PATH
 export PATH="/usr/local/sbin:$PATH"
 
 # Add rbenv to PATH
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-
-# Setting PATH for Python 3.6
-# The original version is saved in .bash_profile.pysave
-PATH="/Library/Frameworks/Python.framework/Versions/3.6/bin:${PATH}"
-export PATH
 
 # start fidor apps with a customized script
 alias  ]]='bash ~/start.sh'
