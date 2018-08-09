@@ -7,13 +7,13 @@ if type _git &> /dev/null && [ -f /usr/local/etc/bash_completion.d/git-completio
 fi;
 
 # random emoji to terminal
-EMOJIES=(🍺 🥃 🏋️ 🏀 🎉 ☠️ 🤡 🤘 🖕 👊 🐰 🐼 🦁 🐮 🐷);
+EMOJIES=(🍺 🥃 🏋️ 🏀 🎉 ☠️  🤡 🤘 🖕 👊 🐰 🐼 🦁 🐮 🐷 );
 # replace username with tilde
 ME='/Users/radoangelov';
-PS1='${EMOJIES[$((RANDOM%15))]}  $(echo "${PWD/$ME/~}")$(__git_ps1 " \033[0;33m%s\033[0m")$ '
+PS1='${EMOJIES[$((RANDOM%15))]} $(echo "${PWD/$ME/~}")$(__git_ps1 " \033[0;33m%s\033[0m") $ '
 
 # Enable jump
-eval "$(jump shell)"
+eval "$(jump shell bash)"
 
 # shell aliases
 alias  la='ls -a'
@@ -32,8 +32,8 @@ alias  gcb='git checkout -b'
 alias  gco='git checkout'
 alias  camend='git commit --amend'
 alias  glogp='git log --oneline --decorate -24'
-alias  goh='git log --graph --abbrev-commit --decorate --date=relative --all'
-alias  gcm='git commit -m'
+alias  gdog='git log --decorate --oneline --graph'
+alias  gcm='git commit'
 alias  gr='git remote'
 alias  grv='git remote -v'
 alias  gra='git remote add'
@@ -66,12 +66,14 @@ function gcurf() {
         git push origin -f $br
 }
 
-# Add bin to PATH
+# Add sbin to PATH
 export PATH="/usr/local/sbin:$PATH"
+
+# Add bin to PATH
+export PATH="/usr/local/bin:$PATH"
 
 # Add rbenv to PATH
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
-# start fidor apps with a customized script
-alias  ]]='bash ~/start.sh'
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
