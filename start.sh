@@ -1,40 +1,30 @@
 #!/bin/bash
 
-dir=$(pwd | cut -d'/' -f5)
+dir=$(pwd | rev | cut -d'/' -f1 | rev)
+
+function ensure_service() {
+	# grep status
+	service_status=$(brew services ls | tr -s ' ' | grep $1 | cut -d' ' -f2)
+
+	if [ "$service_status" = "stopped" ]; then
+		ttab brew services start $1i
+	else
+		echo -e "\n $1 is up! ✅"
+	fi
+}
 
 case "$dir" in
 
-        "onboarding") echo -e "Booting Onboarding @ 6000\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 "
-        bundle exec rails server --port=6000 -b 0.0.0.0
+        #starts monolith
+        "application") ensure_service postgres
+	ensure_service redis
+	echo -e "\nBooting Monolith @ 3000\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾\n "
+        bundle exec rails server --port=3000 &
+	ttab ~/code/application/bin/deploy/sidekiq &
+	wait
         ;;
 
-        "onboarding_data_service") echo -e "Booting OnboardingDataService @ 6002\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 "
-        bundle exec rails server --port=6002 -b 0.0.0.0
-        ;;
-
-        "api_gateway-1") echo -e "Booting Api Gateway\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 "
-        bundle exec puma -C config/puma.rb
-        ;;
-
-        "auth_service") echo -e "Booting Auth Service @ 3123\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 "
-        bundle exec rails server
-        ;;
-
-        "backoffice") echo -e "Booting Backoffice @ 3004\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 "
-        bundle exec rails server --port=3004 -b 0.0.0.0
-        ;;
-
-        "adapter") echo -e "Booting Adapter @ 7000\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 "
-        bundle exec rails server --port=7000
-        ;;
-
-        "gateway") echo -e "Booting Card Gateway @ 3003\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 "
-        bundle exec rails server --port=3003 -b 0.0.0.0
-        ;;
-
-        #starts banking
-        *) echo -e "Booting Banking @ 3000\n🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 🐾 "
-        EVENT_NOTIFIER_REGISTRY=generic PROJECT=generic LOCALE=en bundle exec rails server -b 0.0.0.0 --port=3000
-        ;;
+	*) echo -e "\n🚫 Not a code dir! 🚫\n"
+	;;
 
 esac
