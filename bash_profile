@@ -26,6 +26,10 @@ alias  job1='bundle exec rake jobs:workoff'
 alias  rs='bundle exec rspec'
 alias  db_restart='bundle exec rake db:drop db:create db:migrate db:seed'
 
+# brew aliases
+alias  bri='brew install'
+alias  brs='brew services'
+
 # git aliases
 alias  gs='git status'
 alias  gcb='git checkout -b'
@@ -50,6 +54,7 @@ alias  prev='git checkout @{-1}'
 alias  dif='git diff'
 alias  gst='git stash'
 alias  gstp='git stash pop'
+alias  gcherry='git cherry-pick'
 
 # git functions
 # push to current branch
@@ -62,8 +67,15 @@ function gcur() {
 # force push to current branch
 function gcurf() {
         br=$(git rev-parse --abbrev-ref HEAD)
-        echo -e "Force pushing to branch: ${br}\n"
-        git push origin -f $br
+
+	# prompt with branch name in red color
+	read -p "Is $(echo -e "\033[0;31m${br}\033[0m") the desired branch? [Y/n]: " response
+	if [ $response = "y" -o $response = "Y" ]; then
+		echo -e "Force pushing to branch: ${br}\n"
+        	git push origin -f $br
+	else
+		echo -e "Your changes are not pushed! Checkout the desired branch.\n"
+	fi
 }
 
 # Add sbin to PATH
@@ -77,3 +89,5 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+alias ]]="bash ~/start.sh"
