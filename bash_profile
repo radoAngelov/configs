@@ -60,7 +60,7 @@ alias  gcherry='git cherry-pick'
 # push to current branch
 function gcur() {
         br=$(git rev-parse --abbrev-ref HEAD)
-        echo -e "Pushing to branch: ${br}\n"
+        echo -e "Pushing to branch: \033[01;36m${br}\033[0m\n"
         git push origin $br
 }
 
@@ -68,10 +68,9 @@ function gcur() {
 function gcurf() {
         br=$(git rev-parse --abbrev-ref HEAD)
 
-	# prompt with branch name in red color
-	read -p "Is $(echo -e "\033[0;31m${br}\033[0m") the desired branch? [Y/n]: " response
+	read -p "Is $(echo -e "\033[01;31m${br}\033[0m") the desired branch? [Y/n]: " response
 	if [ $response = "y" -o $response = "Y" ]; then
-		echo -e "Force pushing to branch: ${br}\n"
+		echo -e "Force pushing to branch: \033[01;36m${br}\033[0m\n"
         	git push origin -f $br
 	else
 		echo -e "Your changes are not pushed! Checkout the desired branch.\n"
