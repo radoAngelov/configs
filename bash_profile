@@ -23,8 +23,9 @@ alias  be='bundle exec'
 alias  bi='bundle install'
 alias  job='bundle exec rake jobs:work'
 alias  job1='bundle exec rake jobs:workoff'
-alias  rs='bundle exec rspec'
-alias  db_restart='bundle exec rake db:drop db:create db:migrate db:seed'
+alias  rs='bin/rspec'
+alias  db_restart='bundle exec rake db:drop db:create db:structure:load db:seed'
+alias  rails_pid='cat /Users/radoangelov/code/application/tmp/pids/server.pid'
 
 # brew aliases
 alias  bri='brew install'
@@ -60,7 +61,7 @@ alias  gcherry='git cherry-pick'
 # push to current branch
 function gcur() {
         br=$(git rev-parse --abbrev-ref HEAD)
-        echo -e "Pushing to branch: \033[01;36m${br}\033[0m\n"
+        echo -e "\nPushing to branch: \033[01;36m${br}\033[0m\n"
         git push origin $br
 }
 
@@ -70,10 +71,14 @@ function gcurf() {
 
 	read -p "Is $(echo -e "\033[01;31m${br}\033[0m") the desired branch? [Y/n]: " response
 	if [ $response = "y" -o $response = "Y" ]; then
-		echo -e "Force pushing to branch: \033[01;36m${br}\033[0m\n"
-        	git push origin -f $br
+		if [ $br = "master" ]; then
+			echo -e "\nGTFO 🖕 You cannot force push to master❗🚫❗\n"
+		else
+			echo -e "\nForce pushing to branch: \033[01;36m${br}\033[0m\n"
+        		git push origin --force-with-lease $br
+		fi
 	else
-		echo -e "Your changes are not pushed! Checkout the desired branch.\n"
+		echo -e "Your changes are not pushed! Type Y or checkout the desired branch.\n"
 	fi
 }
 
@@ -89,4 +94,6 @@ eval "$(rbenv init -)"
 
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
+alias demossh="bash ~/demossh.sh"
 alias ]]="bash ~/start.sh"
+

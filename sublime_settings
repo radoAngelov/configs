@@ -1,6 +1,7 @@
 {
-  "trim_automatic_white_space": "all",
+	"draw_white_space": "all",
 	"ensure_newline_at_eof_on_save": true,
+	"fallback_encoding": "UTF-8",
 	"folder_exclude_patterns":
 	[
 		".svn",
@@ -11,14 +12,23 @@
 		"coverage",
 		"log"
 	],
-	"font_size": 14,
+	"font_size": 18,
 	"highlight_line": true,
 	"ignored_packages":
 	[
+		"Git blame",
+		"Git Formats",
+		"RSpec",
 		"Vintage"
+	],
+	"rulers":
+	[
+		72,
+		110
 	],
 	"tab_size": 2,
 	"translate_tabs_to_spaces": true,
+	"trim_automatic_white_space": "all",
 	"trim_trailing_white_space_on_save": true,
 	"word_wrap": true
 }
