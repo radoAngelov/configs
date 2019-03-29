@@ -24,8 +24,25 @@ alias  bi='bundle install'
 alias  job='bundle exec rake jobs:work'
 alias  job1='bundle exec rake jobs:workoff'
 alias  rs='bin/rspec'
-alias  db_restart='bundle exec rake db:drop db:create db:structure:load db:seed'
+alias  db-reset='bundle exec rake db:drop db:create db:structure:load db:seed'
 alias  rails_pid='cat /Users/radoangelov/code/application/tmp/pids/server.pid'
+
+# bundle functions
+# running test suite after master rebase
+function master-rs() {
+  echo -e "\nInstalling gems after rebase!\n\n"
+  printf '%(%Y%m%d%H%M%S)T'
+  bundle install
+  echo -e "\nPreparing the database for testing!\n\n"
+  printf '%(%Y%m%d%H%M%S)T'
+  bin/rails db:test:prepare
+  echo -e "\nReseting SPRING!\n\n"
+  printf '%(%Y%m%d%H%M%S)T'
+  bin/spring stop
+  echo -e "\nRunning the test suite!\n\n"
+  printf '%(%Y%m%d%H%M%S)T'
+  bin/rspec
+}
 
 # brew aliases
 alias  bri='brew install'
@@ -69,17 +86,31 @@ function gcur() {
 function gcurf() {
         br=$(git rev-parse --abbrev-ref HEAD)
 
-	read -p "Is $(echo -e "\033[01;31m${br}\033[0m") the desired branch? [Y/n]: " response
-	if [ $response = "y" -o $response = "Y" ]; then
-		if [ $br = "master" ]; then
-			echo -e "\nGTFO 🖕 You cannot force push to master❗🚫❗\n"
-		else
-			echo -e "\nForce pushing to branch: \033[01;36m${br}\033[0m\n"
-        		git push origin --force-with-lease $br
-		fi
-	else
-		echo -e "Your changes are not pushed! Type Y or checkout the desired branch.\n"
-	fi
+  read -p "Is $(echo -e "\033[01;31m${br}\033[0m") the desired branch? [Y/n]: " response
+  if [ $response = "y" -o $response = "Y" ]; then
+    if [ $br = "master" ]; then
+      echo -e "\nGTFO 🖕 You cannot force push to master❗🚫❗\n"
+    else
+      echo -e "\nForce pushing to branch: \033[01;36m${br}\033[0m\n"
+            git push origin --force-with-lease $br
+    fi
+  else
+    echo -e "Your changes are not pushed! Type Y or checkout the desired branch.\n"
+  fi
+}
+
+# switch branch by given string
+function grepco() {
+  git checkout $(git branch | grep $1)
+}
+
+# pull from master and update configs
+function gp-master(){
+  git checkout master
+  git pull origin master
+  cp config/configby.variables.example.yml config/configby.variables.yml
+  sed -i '' '1,/receipt-bank.test/s/receipt-bank.test/localhost:3000/' config/configby.variables.yml
+  echo -e "\n\033[01;36mConfigby is updated to the latest version and the base URI is:\033[0m\n\n$(head -2 config/configby.variables.yml)"
 }
 
 # Add sbin to PATH
@@ -91,9 +122,3 @@ export PATH="/usr/local/bin:$PATH"
 # Add rbenv to PATH
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-
-export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
-
-alias demossh="bash ~/demossh.sh"
-alias ]]="bash ~/start.sh"
-
