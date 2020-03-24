@@ -11,10 +11,10 @@ if [ ! -z "$1" ]
 fi
 
 read -p "Please specify your demo scene name(https://overseer.receipt-labs.com/scenes): " demo_scene
-read -p "Please specify app name (Leave blank for monolith): " app_name
+read -p "Please specify app name (Leave blank for integrations): " app_name
 read -p "Please specify component name (Leave blank for sidekiq): " component_name
 
-app_name=${app_name:-monolith}
+app_name=${app_name:-integrations}
 component_name=${component_name:-sidekiq}
 
 pod_name=$(kubectl -n $demo_scene get pods | grep "$app_name-$component_name" | cut -d' ' -f1)

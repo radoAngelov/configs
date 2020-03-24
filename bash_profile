@@ -21,27 +21,31 @@ alias  la='ls -a'
 # bundle aliases
 alias  be='bundle exec'
 alias  bi='bundle install'
+alias  bo='EDITOR=subl bundle open'
 alias  job='bundle exec rake jobs:work'
 alias  job1='bundle exec rake jobs:workoff'
 alias  rs='bin/rspec'
+alias  sid='dos2unix bin/deploy/sidekiq && bin/deploy/sidekiq'
 alias  db-reset='bundle exec rake db:drop db:create db:structure:load db:seed'
-alias  rails_pid='cat /Users/radoangelov/code/application/tmp/pids/server.pid'
+alias  rails-pid='cat /Users/radoangelov/code/application/tmp/pids/server.pid'
+alias  ss='ssh -R 80:localhost:3000 ssh.localhost.run'
 
 # bundle functions
 # running test suite after master rebase
 function master-rs() {
-  echo -e "\nInstalling gems after rebase!\n\n"
-  printf '%(%Y%m%d%H%M%S)T'
-  bundle install
-  echo -e "\nPreparing the database for testing!\n\n"
-  printf '%(%Y%m%d%H%M%S)T'
-  bin/rails db:test:prepare
-  echo -e "\nReseting SPRING!\n\n"
-  printf '%(%Y%m%d%H%M%S)T'
-  bin/spring stop
-  echo -e "\nRunning the test suite!\n\n"
-  printf '%(%Y%m%d%H%M%S)T'
-  bin/rspec
+	echo -e "\nInstalling gems after rebase!\n\n"
+	echo $(date -u)
+	bundle install
+	sleep 1
+	echo -e "\nPreparing the database for testing!\n\n"
+	echo $(date -u)
+	bin/rails db:test:prepare
+	echo -e "\nReseting SPRING!\n\n"
+	echo $(date -u)
+	bin/spring stop
+	echo -e "\nRunning the test suite!\n\n"
+	echo $(date -u)
+	bin/rspec
 }
 
 # brew aliases
@@ -67,12 +71,19 @@ alias  greb='git rebase'
 alias  grebc='git rebase --continue'
 alias  gf='git fetch'
 alias  gm='git merge'
+alias  gmff='git merge --no-ff'
+alias  grm='git fetch && git reset --hard origin/master'
+alias  grs='git fetch && git reset --hard origin/staging'
+alias  gfm='git fetch && git rebase origin/master'
+alias  gez='git commit --amend --no-edit && gcurf'
 alias  squash='git rebase -i'
 alias  prev='git checkout @{-1}'
-alias  dif='git diff'
+alias  dif='git diff --patience'
 alias  gst='git stash'
 alias  gstp='git stash pop'
 alias  gcherry='git cherry-pick'
+alias  gcl='git checkout app/ bin/ lib/'
+alias  gfix='git commit --fixup $(git rev-parse HEAD)'
 
 # git functions
 # push to current branch
@@ -86,31 +97,31 @@ function gcur() {
 function gcurf() {
         br=$(git rev-parse --abbrev-ref HEAD)
 
-  read -p "Is $(echo -e "\033[01;31m${br}\033[0m") the desired branch? [Y/n]: " response
-  if [ $response = "y" -o $response = "Y" ]; then
-    if [ $br = "master" ]; then
-      echo -e "\nGTFO 🖕 You cannot force push to master❗🚫❗\n"
-    else
-      echo -e "\nForce pushing to branch: \033[01;36m${br}\033[0m\n"
-            git push origin --force-with-lease $br
-    fi
-  else
-    echo -e "Your changes are not pushed! Type Y or checkout the desired branch.\n"
-  fi
+	read -p "Is $(echo -e "\033[01;31m${br}\033[0m") the desired branch? [Y/n]: " response
+	if [ $response = "y" -o $response = "Y" ]; then
+		if [ $br = "master" ]; then
+			echo -e "\nGTFO 🖕 You cannot force push to master❗🚫❗\n"
+		else
+			echo -e "\nForce pushing to branch: \033[01;36m${br}\033[0m\n"
+        		git push origin --force-with-lease $br
+		fi
+	else
+		echo -e "Your changes are not pushed! Type Y or checkout the desired branch.\n"
+	fi
 }
 
 # switch branch by given string
 function grepco() {
-  git checkout $(git branch | grep $1)
+	git checkout $(git branch | grep $1)
 }
 
 # pull from master and update configs
 function gp-master(){
-  git checkout master
-  git pull origin master
-  cp config/configby.variables.example.yml config/configby.variables.yml
-  sed -i '' '1,/receipt-bank.test/s/receipt-bank.test/localhost:3000/' config/configby.variables.yml
-  echo -e "\n\033[01;36mConfigby is updated to the latest version and the base URI is:\033[0m\n\n$(head -2 config/configby.variables.yml)"
+	git checkout master
+	git pull origin master
+	cp config/configby.variables.example.yml config/configby.variables.yml
+	sed -i '' '1,/receipt-bank.test/s/receipt-bank.test/localhost:3000/' config/configby.variables.yml
+	echo -e "\n\033[01;36mConfigby is updated to the latest version and the base URI is:\033[0m\n\n$(head -2 config/configby.variables.yml)"
 }
 
 # Add sbin to PATH
@@ -122,3 +133,14 @@ export PATH="/usr/local/bin:$PATH"
 # Add rbenv to PATH
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
+
+# Add docker repo
+export DOCKER_REPO="rbdr.io"
+
+export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
+
+alias demossh="bash ~/demossh.sh"
+alias ]]="bash ~/start.sh"
+
+export PATH=/usr/local/puma-dev:$PATH
+export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
