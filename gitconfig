@@ -37,17 +37,15 @@
 	ui = auto
 
 [user]
-	name = angelov
-	email = angelov@fidor.com
+	name = Radoslav Angelov
+	email = radoslav.angelovx2@gmail.com
+	signingkey = 5A8B2F8CA854E48A
 
 [branch]
 	autosetuprebase = always
 
 [core]
 	excludesfile = /Users/radoangelov/.gitignore
-	
-	# default editor for commit messages
-	editor = vim
 
 	# Make `git rebase` safer on OS X
     	# More info: http://www.git-tower.com/blog/make-git-rebase-safe-on-osx
@@ -55,3 +53,15 @@
 
 	# errors for whitespaces
 	whitespace = space-before-tab,trailing-space,tab-in-indent
+	autocrlf = input
+[rebase]
+	autosquash = true
+
+[diff]
+        tool = sublimerge
+
+[difftool]
+        prompt = false
+
+[difftool "sublimerge"]
+        cmd = subl -n --wait \"$REMOTE\" \"$LOCAL\" --command \"sublimerge_diff$

@@ -56,10 +56,10 @@ alias  brs='brew services'
 alias  gs='git status'
 alias  gcb='git checkout -b'
 alias  gco='git checkout'
-alias  camend='git commit --amend'
+alias  camend='git commit -S --amend'
 alias  glogp='git log --oneline --decorate -24'
 alias  gdog='git log --decorate --oneline --graph'
-alias  gcm='git commit'
+alias  gcm='git commit -S'
 alias  gr='git remote'
 alias  grv='git remote -v'
 alias  gra='git remote add'
@@ -74,8 +74,9 @@ alias  gm='git merge'
 alias  gmff='git merge --no-ff'
 alias  grm='git fetch && git reset --hard origin/master'
 alias  grs='git fetch && git reset --hard origin/staging'
+alias  gr='git fetch && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
 alias  gfm='git fetch && git rebase origin/master'
-alias  gez='git commit --amend --no-edit && gcurf'
+alias  gez='git commit -S --amend --no-edit && gcurf'
 alias  squash='git rebase -i'
 alias  prev='git checkout @{-1}'
 alias  dif='git diff --patience'
@@ -83,7 +84,7 @@ alias  gst='git stash'
 alias  gstp='git stash pop'
 alias  gcherry='git cherry-pick'
 alias  gcl='git checkout app/ bin/ lib/'
-alias  gfix='git commit --fixup $(git rev-parse HEAD)'
+alias  gfix='git commit -S --fixup $(git rev-parse HEAD)'
 
 # git functions
 # push to current branch
@@ -144,3 +145,4 @@ alias ]]="bash ~/start.sh"
 
 export PATH=/usr/local/puma-dev:$PATH
 export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
+export GPG_TTY=$(tty)
