@@ -25,10 +25,27 @@ alias  bo='EDITOR=subl bundle open'
 alias  job='bundle exec rake jobs:work'
 alias  job1='bundle exec rake jobs:workoff'
 alias  rs='bin/rspec'
+alias  covrs='COVERAGE=true bin/rspec'
 alias  sid='dos2unix bin/deploy/sidekiq && bin/deploy/sidekiq'
-alias  db-reset='bundle exec rake db:drop db:create db:structure:load db:seed'
+alias  db-reset='bundle exec rake db:drop db:create db:structure:load db:migrate db:seed'
 alias  rails-pid='cat /Users/radoangelov/code/application/tmp/pids/server.pid'
 alias  ss='ssh -R 80:localhost:3000 ssh.localhost.run'
+alias  cov='open coverage/index.html'
+alias  cop='bundle exec rubocop'
+alias  cop-correct='bundle exec rubocop --safe-auto-correct'
+
+# kubernetes
+alias kubedemo='kubectl --kubeconfig=/Users/radoangelov/.kube/demo_cluster.yml'
+alias kubestaging='kubectl --kubeconfig=/Users/radoangelov/.kube/staging_cluster.yml'
+alias kubeproduction='kubectl --kubeconfig=/Users/radoangelov/.kube/production_cluster.yml'
+alias kubeinfrastructure='kubectl --kubeconfig=/Users/radoangelov/.kube/infrastructure_cluster.yml'
+
+# migrations
+alias  mig='bin/rails db:migrate'
+alias  roll='bin/rails db:rollback'
+alias  migdown='bin/rails db:migrate:down'
+alias  migup='bin/rails db:migrate:up'
+alias  migstat='bin/rails db:migrate:status'
 
 # bundle functions
 # running test suite after master rebase
@@ -76,15 +93,23 @@ alias  grm='git fetch && git reset --hard origin/master'
 alias  grs='git fetch && git reset --hard origin/staging'
 alias  gr='git fetch && git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)'
 alias  gfm='git fetch && git rebase origin/master'
-alias  gez='git commit -S --amend --no-edit && gcurf'
+alias  gez='git add . && git commit -S --amend --no-edit && gcurf'
 alias  squash='git rebase -i'
 alias  prev='git checkout @{-1}'
 alias  dif='git diff --patience'
 alias  gst='git stash'
 alias  gstp='git stash pop'
 alias  gcherry='git cherry-pick'
+alias  gcherryc='git cherry-pick --continue'
 alias  gcl='git checkout app/ bin/ lib/'
 alias  gfix='git commit -S --fixup $(git rev-parse HEAD)'
+alias  gfc='git add . && git commit -S --fixup $(git rev-parse HEAD) && gcur'
+
+# kubernetes aliases
+alias kubedemo='kubectl --kubeconfig=/Users/radoangelov/.kube/demo_cluster.yml'
+alias kubestaging='kubectl --kubeconfig=/Users/radoangelov/.kube/staging_cluster.yml'
+alias kubeproduction='kubectl --kubeconfig=/Users/radoangelov/.kube/production_cluster.yml'
+alias kubeinfrastructure='kubectl --kubeconfig=/Users/radoangelov/.kube/infrastructure_cluster.yml'
 
 # git functions
 # push to current branch
@@ -138,11 +163,13 @@ eval "$(rbenv init -)"
 # Add docker repo
 export DOCKER_REPO="rbdr.io"
 
+# Add krew to PATH
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
 export OBJC_DISABLE_INITIALIZE_FORK_SAFETY=YES
 
 alias demossh="bash ~/demossh.sh"
 alias ]]="bash ~/start.sh"
 
 export PATH=/usr/local/puma-dev:$PATH
-export PATH="/usr/local/opt/postgresql@11/bin:$PATH"
 export GPG_TTY=$(tty)
